@@ -31,4 +31,18 @@ namespace :laravel do
             execute "php #{current_path}/artisan config:cache"
         end
     end
+
+
+    desc <<-DESC
+        Migrates the database 
+        This is best used after deploy:published
+        Probably shouldn't run on production
+    DESC
+
+    task :migrate_db do
+        on roles(:app) do
+            execute "php #{current_path}/artisan migrate"
+            info "Migrating DB"
+        end
+    end
 end
