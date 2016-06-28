@@ -45,4 +45,17 @@ namespace :laravel do
             info "Migrating DB"
         end
     end
+
+    desc <<-DESC
+        Backup the database 
+        This is best used after deploy:published but before :migrate_db
+        Requires "backup-manager/laravel" package
+    DESC
+
+    task :backup_db do
+        on roles(:app) do
+            execute "php #{current_path}/artisan db:backup --database=mysql --destination=local --destinationPath=`date +\%Y/%d-%m-%Y` --compression=gzip"
+            info "Backing Up DB"
+        end
+    end
 end
