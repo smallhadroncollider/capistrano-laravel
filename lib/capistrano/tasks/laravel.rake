@@ -32,6 +32,17 @@ namespace :laravel do
         end
     end
 
+    desc <<-DESC
+        Clear cached views 
+        This is best used after deploy:published
+    DESC
+
+    task :clear do
+        on roles(:app) do
+            info "Clearing cached views"
+            execute "php #{current_path}/artisan view:clear"
+        end
+    end
 
     desc <<-DESC
         Migrates the database 
